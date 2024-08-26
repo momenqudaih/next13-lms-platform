@@ -61,18 +61,27 @@ const TitleForm = ({
             <div className='font-medium flex items-center justify-between'>
                 Course Title
                 <Button onClick={toggleEditing} variant="ghost">
-                    {isEditing && (
-                        <>Cancel</>
-                    )}
-                    {!isEditing && (
-                        <>
-                            <Pencil className='h-4 w-4 mr-2'/>
-                            Edit title
-                        </>
-                    )}
-                    
+                    {
+                        isEditing ? (
+                            <>Cancel</>
+                        ): (
+                            <>
+                                <Pencil className='h-4 w-4 mr-2' />
+                                Edit Title
+                            </>
+                        )
+
+                    }
                 </Button>
             </div>
+            {!isEditing && (
+                <p className='text-sm mt-2'>
+                    {initialData.title}
+                </p>
+            )}
+            {/* {isEditing && (
+                <Form></Form>
+            )} */}
         </div>
     );
 }
