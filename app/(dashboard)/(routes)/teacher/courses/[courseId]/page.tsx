@@ -7,15 +7,15 @@ import { IconBadge } from '@/components/icon-badge';
 import TitleForm from './_components/title-form';
 import DescriptionForm from './_components/description-form';
 import ImageForm from './_components/image-form';
+import CategoryForm from './_components/category-form';
 
-
-const CourseIdPage = async (
-    { params }: { 
-        params: { 
-            courseId: string 
-        }
-    }
-) => {
+const CourseIdPage = async ({
+    params,
+}: {
+    params: {
+        courseId: string;
+    };
+}) => {
     const { userId } = auth();
 
     if (!userId) {
@@ -25,6 +25,12 @@ const CourseIdPage = async (
     const course = await db.course.findUnique({
         where: {
             id: params.courseId,
+        },
+    });
+
+    const categories = await db.category.findMany({
+        orderBy: {
+            name: 'asc',
         },
     });
 
@@ -54,23 +60,25 @@ const CourseIdPage = async (
                     </span>
                 </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-16'>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                 <div>
-                    <div className='flex items-center gap-x-2'>
+                    <div className="flex items-center gap-x-2">
                         <IconBadge icon={LayoutDashboard} />
-                        <h2 className='text-xl'>Customize your course</h2>
+                        <h2 className="text-xl">Customize your course</h2>
                     </div>
-                    <TitleForm 
+                    <TitleForm initialData={course} courseId={course.id} />
+                    <DescriptionForm
                         initialData={course}
                         courseId={course.id}
                     />
-                    <DescriptionForm 
+                    <ImageForm initialData={course} courseId={course.id} />
+                    <CategoryForm
                         initialData={course}
                         courseId={course.id}
-                    />
-                    <ImageForm
-                        initialData={course}
-                        courseId={course.id}
+                        options={categories.map((category) => ({
+                            label: category.name,
+                            value: category.id,
+                        }))}
                     />
                 </div>
             </div>
