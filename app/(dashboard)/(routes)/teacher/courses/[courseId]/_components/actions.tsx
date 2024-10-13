@@ -8,37 +8,30 @@ import { Button } from '@/components/ui/button';
 import { ConfirmModal } from '@/components/modals/confirm-modal';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { useConfettiStore } from '@/hooks/use-confetti-store';
 
-interface ChapterActionsProps {
+interface ActionsProps {
     disabled: boolean;
     courseId: string;
-    chapterId: string;
     isPublished: boolean;
 }
 
-const ChapterActions = ({
-    disabled,
-    courseId,
-    chapterId,
-    isPublished,
-}: ChapterActionsProps) => {
+export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    const confetti = useConfettiStore();
 
     const onClick = async () => {
         try {
             setIsLoading(true);
 
             if (isPublished) {
-                await axios.patch(
-                    `/api/courses/${courseId}/chapters/${chapterId}/unpublish`,
-                );
-                toast.success('Chapter UnPublished Successfully');
+                await axios.patch(`/api/courses/${courseId}/unpublish`);
+                toast.success('Course UnPublished Successfully');
             } else {
-                await axios.patch(
-                    `/api/courses/${courseId}/chapters/${chapterId}/publish`,
-                );
-                toast.success('Chapter Published Successfully');
+                await axios.patch(`/api/courses/${courseId}/publish`);
+                toast.success('Course Published Successfully');
+                confetti.onOpen();
             }
 
             router.refresh();
@@ -53,13 +46,11 @@ const ChapterActions = ({
         try {
             setIsLoading(true);
 
-            await axios.delete(
-                `/api/courses/${courseId}/chapters/${chapterId}`,
-            );
+            await axios.delete(`/api/courses/${courseId}`);
 
-            toast.success('Chapter deleted Successfully');
+            toast.success('course deleted Successfully');
             router.refresh();
-            router.push(`/teacher/courses/${courseId}`);
+            router.push(`/teacher/courses`);
         } catch {
             toast.error('Something went wrong');
         } finally {
@@ -85,5 +76,3 @@ const ChapterActions = ({
         </div>
     );
 };
-
-export default ChapterActions;
