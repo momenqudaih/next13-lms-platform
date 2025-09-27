@@ -1,3 +1,9 @@
 {
-    "cSpell.words": ["pangea", "Parchases", "reorderd", "tanstack"]
+    "cSpell.words": [
+        "pangea",
+        "Parchases",
+        "reorderd",
+        "tanstack"
+    ],
+    "postman.settings.dotenv-detection-notification-visibility": false
 }
