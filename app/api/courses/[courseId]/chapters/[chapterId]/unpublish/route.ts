@@ -2,6 +2,9 @@ import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
+// This is a dynamic API route
+export const dynamic = 'force-dynamic';
+
 export async function PATCH(
     req: Request,
     {

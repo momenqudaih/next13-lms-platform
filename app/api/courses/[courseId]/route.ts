@@ -1,10 +1,12 @@
 import { MuxData } from '@prisma/client';
-import { metadata } from './../../../layout';
 import Mux from '@mux/mux-node';
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
+
+// This is a dynamic API route
+export const dynamic = 'force-dynamic';
 
 const { video } = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,

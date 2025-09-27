@@ -3,6 +3,9 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
 
+// This is a dynamic API route
+export const dynamic = 'force-dynamic';
+
 export async function POST(
     req: Request,
     { params }: { params: { courseId: string } },

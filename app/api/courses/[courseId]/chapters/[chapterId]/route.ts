@@ -4,6 +4,9 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
 
+// This is a dynamic API route
+export const dynamic = 'force-dynamic';
+
 const { video } = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,
     tokenSecret: process.env.MUX_TOKEN_SECRET,
