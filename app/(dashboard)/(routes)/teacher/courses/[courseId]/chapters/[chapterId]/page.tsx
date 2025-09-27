@@ -1,8 +1,6 @@
-import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
-import { db } from '@/lib/db';
 import { ArrowLeft, Eye, LayoutDashboard, Video } from 'lucide-react';
 import { IconBadge } from '@/components/icon-badge';
 import { ChapterTitleForm } from './_components/chapter-title-form';
@@ -14,12 +12,17 @@ import { Banner } from '@/components/banner';
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const ChapterIdPage = async ({
     params,
 }: {
     params: { courseId: string; chapterId: string };
 }) => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { db } = await import('@/lib/db');
+    
     const { userId } = auth();
 
     if (!userId) {

@@ -1,8 +1,6 @@
-import { auth } from '@clerk/nextjs';
 import { Chapter, Course, UserProgress } from '@prisma/client';
 import { redirect } from 'next/navigation';
 
-import { db } from '@/lib/db';
 import { CourseSidebarItem } from './course-sidebar-item';
 
 interface CourseSideBarProps {
@@ -18,6 +16,10 @@ export const CourseSideBar = async ({
     course,
     progressCount,
 }: CourseSideBarProps) => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { db } = await import('@/lib/db');
+    
     const { userId } = auth();
 
     if (!userId) {

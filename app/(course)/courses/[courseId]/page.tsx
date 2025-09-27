@@ -1,10 +1,13 @@
-import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+    // Dynamic import to prevent build-time issues
+    const { db } = await import('@/lib/db');
+    
     const course = await db.course.findUnique({
         where: {
             id: params.courseId,

@@ -1,12 +1,10 @@
-import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
-import { getProgress } from '@/actions/get-progress';
-import { db } from '@/lib/db';
 import { CourseSideBar } from './_components/course-sidebar';
 import { CourseNavbar } from './_components/course-navbar';
 
 // Force dynamic rendering for this layout
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const CourseLayout = async ({
     children,
@@ -15,6 +13,11 @@ const CourseLayout = async ({
     children: React.ReactNode;
     params: { courseId: string };
 }) => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { getProgress } = await import('@/actions/get-progress');
+    const { db } = await import('@/lib/db');
+    
     const { userId } = auth();
 
     if (!userId) {

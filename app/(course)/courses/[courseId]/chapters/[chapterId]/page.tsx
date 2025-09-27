@@ -1,8 +1,5 @@
-import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { File } from 'lucide-react';
-
-import { getChapter } from '@/actions/get-chapter';
 
 import { Banner } from '@/components/banner';
 import { Separator } from '@/components/ui/separator';
@@ -13,12 +10,17 @@ import { EnrollButton } from './_components/enroll-button';
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const ChapterIdPage = async ({
     params,
 }: {
     params: { courseId: string; chapterId: string };
 }) => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { getChapter } = await import('@/actions/get-chapter');
+    
     const { userId } = auth();
 
     if (!userId) {
