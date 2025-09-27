@@ -1,16 +1,8 @@
-import Mux from '@mux/mux-node';
-import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
-import { db } from '@/lib/db';
-
-// This is a dynamic API route
+// Route segment config - force dynamic
 export const dynamic = 'force-dynamic';
-
-const { video } = new Mux({
-    tokenId: process.env.MUX_TOKEN_ID,
-    tokenSecret: process.env.MUX_TOKEN_SECRET,
-});
+export const runtime = 'nodejs';
 
 export async function DELETE(
     req: Request,
@@ -21,6 +13,16 @@ export async function DELETE(
     },
 ) {
     try {
+        // Dynamic imports to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        const { auth } = await import('@clerk/nextjs');
+        const Mux = (await import('@mux/mux-node')).default;
+        
+        const { video } = new Mux({
+            tokenId: process.env.MUX_TOKEN_ID,
+            tokenSecret: process.env.MUX_TOKEN_SECRET,
+        });
+        
         const { userId } = auth();
 
         if (!userId) {
@@ -107,6 +109,16 @@ export async function PATCH(
     },
 ) {
     try {
+        // Dynamic imports to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        const { auth } = await import('@clerk/nextjs');
+        const Mux = (await import('@mux/mux-node')).default;
+        
+        const { video } = new Mux({
+            tokenId: process.env.MUX_TOKEN_ID,
+            tokenSecret: process.env.MUX_TOKEN_SECRET,
+        });
+        
         const { userId } = auth();
         const { isPublished, ...values } = await req.json();
 
