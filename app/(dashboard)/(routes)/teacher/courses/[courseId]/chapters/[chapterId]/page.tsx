@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { db } from '@/lib/db';
 import { ArrowLeft, Eye, LayoutDashboard, Video } from 'lucide-react';
 import { IconBadge } from '@/components/icon-badge';
-import { ChapterTitleForm } from './_components/chapter-title-form';
-import { ChapterDescriptionForm } from './_components/chapters-description-form';
-import { ChapterAccessForm } from './_components/chapters-access-form';
-import { ChapterVideoForm } from './_components/chapter-video-form';
+import { 
+    ChapterTitleForm,
+    ChapterDescriptionForm,
+    ChapterAccessForm,
+    ChapterVideoForm,
+    ChapterActions
+} from './_components';
 import { Banner } from '@/components/banner';
-import ChapterActions from './_components/chapter-actions';
 
 const ChapterIdPage = async ({
     params,
