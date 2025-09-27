@@ -1,5 +1,4 @@
 import { Attachment, Chapter } from '@prisma/client';
-import { db } from '@/lib/db';
 
 interface GetChapterProps {
     userId: string;
@@ -13,6 +12,9 @@ export const getChapter = async ({
     chapterId,
 }: GetChapterProps) => {
     try {
+        // Dynamic import to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        
         const purchase = await db.purchase.findUnique({
             where: {
                 userId_courseId: {
