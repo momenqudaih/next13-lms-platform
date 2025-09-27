@@ -136,3 +136,5 @@ export const ChapterAccessForm = ({
         </div>
     );
 };
+
+export default ChapterAccessForm;
