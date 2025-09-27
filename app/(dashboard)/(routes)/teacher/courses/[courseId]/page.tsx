@@ -11,6 +11,9 @@ import { db } from '@/lib/db';
 import { IconBadge } from '@/components/icon-badge';
 import { Banner } from '@/components/banner';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 import TitleForm from './_components/title-form';
 import DescriptionForm from './_components/description-form';
 import ImageForm from './_components/image-form';

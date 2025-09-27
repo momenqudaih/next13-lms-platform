@@ -5,6 +5,9 @@ import { db } from '@/lib/db';
 import { CourseSideBar } from './_components/course-sidebar';
 import { CourseNavbar } from './_components/course-navbar';
 
+// Force dynamic rendering for this layout
+export const dynamic = 'force-dynamic';
+
 const CourseLayout = async ({
     children,
     params,

@@ -8,6 +8,9 @@ import { getCourses } from '@/actions/get-courses';
 import { Categories } from './_components/categories';
 import { CoursesList } from './_components/courses-list';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 interface SearchParamsProps {
     searchParams: {
         title: string;

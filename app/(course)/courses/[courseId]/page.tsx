@@ -1,6 +1,9 @@
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     const course = await db.course.findUnique({
         where: {

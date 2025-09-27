@@ -11,6 +11,9 @@ import { Preview } from '@/components/preview';
 import { VideoPlayer } from './_components/video-player';
 import { EnrollButton } from './_components/enroll-button';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 const ChapterIdPage = async ({
     params,
 }: {

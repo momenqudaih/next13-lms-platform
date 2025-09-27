@@ -4,6 +4,9 @@ import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 const CoursesPage = async () => {
     const { userId } = await auth();
 

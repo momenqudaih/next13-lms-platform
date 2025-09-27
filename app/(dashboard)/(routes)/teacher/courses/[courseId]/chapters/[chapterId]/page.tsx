@@ -12,6 +12,9 @@ import { ChapterVideoForm } from './_components/chapter-video-form';
 import ChapterActions from './_components/chapter-actions';
 import { Banner } from '@/components/banner';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 const ChapterIdPage = async ({
     params,
 }: {
