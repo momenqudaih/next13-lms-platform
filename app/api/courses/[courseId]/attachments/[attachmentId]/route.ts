@@ -24,9 +24,19 @@ export async function DELETE(
             return new NextResponse('Unauthorized', { status: 401 });
         }
 
+        // First verify the attachment exists and belongs to this course
+        const attachment = await db.attachment.findUnique({
+            where: {
+                id: params.attachmentId,
+            },
+        });
+
+        if (!attachment || attachment.courseId !== params.courseId) {
+            return new NextResponse('Attachment not found', { status: 404 });
+        }
+
         const deletedAttachment = await db.attachment.delete({
             where: {
-                courseId: params.courseId,
                 id: params.attachmentId,
             },
         });
