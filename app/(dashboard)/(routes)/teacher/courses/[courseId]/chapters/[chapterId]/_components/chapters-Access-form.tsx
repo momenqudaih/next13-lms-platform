@@ -31,7 +31,7 @@ const formSchema = z.object({
     isFree: z.boolean().default(false),
 });
 
-const ChapterAccessForm = ({
+export const ChapterAccessForm = ({
     initialData,
     courseId,
     chapterId,
@@ -136,5 +136,3 @@ const ChapterAccessForm = ({
         </div>
     );
 };
-
-export default ChapterAccessForm;
