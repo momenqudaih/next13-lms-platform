@@ -4,7 +4,6 @@ declare global {
     var prisma: PrismaClient | undefined;
 }
 
-// Lazy initialization to prevent connection during build
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
 };

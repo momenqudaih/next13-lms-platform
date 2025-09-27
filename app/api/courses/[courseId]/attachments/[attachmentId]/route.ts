@@ -1,15 +1,18 @@
-import { db } from '@/lib/db';
-import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
-// This is a dynamic API route
+// Route segment config - force dynamic
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function DELETE(
     req: Request,
     { params }: { params: { courseId: string; attachmentId: string } },
 ) {
     try {
+        // Dynamic imports to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        const { auth } = await import('@clerk/nextjs');
+        
         const { userId } = auth();
 
         if (!userId) {
