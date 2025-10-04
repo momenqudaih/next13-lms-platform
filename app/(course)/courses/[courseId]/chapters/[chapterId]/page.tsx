@@ -7,6 +7,7 @@ import { Preview } from '@/components/preview';
 
 import { VideoPlayer } from './_components/video-player';
 import { EnrollButton } from './_components/enroll-button';
+import { CourseProgressButton } from './_components/course-progress-button';
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
@@ -40,6 +41,7 @@ const ChapterIdPage = async ({
         courseId: params.courseId,
         chapterId: params.chapterId,
     });
+
 
     if (!chapter || !course) {
         return redirect('/');
@@ -80,8 +82,13 @@ const ChapterIdPage = async ({
                             {chapter.title}
                         </h2>
                         {purchase ? (
-                            <div>{/* TODO: ADD COURSE PROGRESS BUTTON */}</div>
-                        ) : (
+                            <CourseProgressButton 
+                                chapterId={params.chapterId}
+                                courseId={params.courseId}
+                                nextChapterId={nextChapter?.id}
+                                isCompleted={!!userProgress?.isCompleted}
+                            />
+) : (
                             <EnrollButton
                                 courseId={params.courseId}
                                 price={course.price!}

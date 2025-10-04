@@ -21,6 +21,7 @@ model Course {
   attachments Attachment[]
   chapters    Chapter[]
   purchases   Purchase[]
+  analytics   CourseAnalytics?
 
   category    Category?    @relation(fields: [categoryId], references: [id])
 
@@ -113,4 +114,88 @@ model StripeCustomer {
   stripeCustomerId String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// AI Analytics Models
+model UserAnalytics {
+  id String @id @default(uuid())
+  userId String
+  
+  // Learning patterns and insights
+  learningPatterns String? @db.Text
+  strengths Json? // Array of strengths
+  improvements Json? // Array of improvement areas
+  recommendations Json? // Array of course recommendations
+  engagementLevel String? // "high", "medium", "low"
+  studyHabits String? @db.Text
+  suggestions Json? // Array of personalized suggestions
+  
+  // Predictive analytics
+  completionProbability Float? // 0-100
+  riskLevel String? // "low", "medium", "high"
+  riskFactors Json? // Array of risk factors
+  successIndicators Json? // Array of success indicators
+  interventions Json? // Array of recommended interventions
+  studySchedule String? @db.Text
+  motivationStrategies Json? // Array of motivation strategies
+  
+  // Learning path
+  recommendedPath Json? // Array of recommended courses with order
+  timeline String? @db.Text
+  skillProgression Json? // Array of skills
+  alternatives Json? // Alternative learning paths
+  skillGaps Json? // Array of skill gaps
+  prerequisites Json? // Array of prerequisites
+  
+  // Metadata
+  lastAnalyzed DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId])
+  @@unique([userId])
+}
+
+model CourseAnalytics {
+  id String @id @default(uuid())
+  courseId String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  // Course performance insights
+  overallAssessment String? @db.Text
+  problematicAreas Json? // Array of problematic areas
+  engagementInsights String? @db.Text
+  improvements Json? // Array of improvement suggestions
+  contentDifficulty String? // "easy", "medium", "hard"
+  recommendedActions Json? // Array of recommended actions
+  
+  // Analytics data
+  totalStudents Int @default(0)
+  completionRate Float @default(0)
+  averageProgress Float @default(0)
+  chapterAnalytics Json? // Detailed chapter performance data
+  
+  // Metadata
+  lastAnalyzed DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([courseId])
+  @@unique([courseId])
+}
+
+model AnalyticsSession {
+  id String @id @default(uuid())
+  userId String
+  sessionType String // "learning_patterns", "course_performance", "predictive", "learning_path"
+  inputData Json // The data sent to AI
+  outputData Json // The AI response
+  processingTime Int // Time taken in milliseconds
+  success Boolean @default(true)
+  errorMessage String? @db.Text
+  
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+  @@index([sessionType])
 }
