@@ -1,4 +1,3 @@
-import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import {
     CircleDollarSign,
@@ -7,9 +6,12 @@ import {
     ListChecks,
 } from 'lucide-react';
 
-import { db } from '@/lib/db';
 import { IconBadge } from '@/components/icon-badge';
 import { Banner } from '@/components/banner';
+
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 import TitleForm from './_components/title-form';
 import DescriptionForm from './_components/description-form';
@@ -27,6 +29,10 @@ const CourseIdPage = async ({
         courseId: string;
     };
 }) => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { db } = await import('@/lib/db');
+    
     const { userId } = auth();
 
     if (!userId) {

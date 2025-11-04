@@ -1,10 +1,16 @@
 import { DataTable } from './_components/data-table';
 import { columns } from './_components/columns';
-import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
-import { db } from '@/lib/db';
+
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const CoursesPage = async () => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { db } = await import('@/lib/db');
+    
     const { userId } = await auth();
 
     if (!userId) {

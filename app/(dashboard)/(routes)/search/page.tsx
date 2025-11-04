@@ -1,12 +1,13 @@
-import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
-import { db } from '@/lib/db';
 import { SearchInput } from '@/components/search-input';
-import { getCourses } from '@/actions/get-courses';
 
 import { Categories } from './_components/categories';
 import { CoursesList } from './_components/courses-list';
+
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 interface SearchParamsProps {
     searchParams: {
@@ -16,6 +17,11 @@ interface SearchParamsProps {
 }
 
 const page = async ({ searchParams }: SearchParamsProps) => {
+    // Dynamic imports to prevent build-time issues
+    const { auth } = await import('@clerk/nextjs');
+    const { db } = await import('@/lib/db');
+    const { getCourses } = await import('@/actions/get-courses');
+    
     const { userId } = auth();
 
     if (!userId) {

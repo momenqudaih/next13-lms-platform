@@ -1,13 +1,18 @@
-import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
-import { db } from '@/lib/db';
+// Route segment config - force dynamic
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(
     req: Request,
     { params }: { params: { courseId: string } },
 ) {
     try {
+        // Dynamic imports to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        const { auth } = await import('@clerk/nextjs');
+        
         const { userId } = auth();
         const { title } = await req.json();
 

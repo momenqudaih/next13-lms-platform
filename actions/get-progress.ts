@@ -1,10 +1,11 @@
-import { db } from '@/lib/db';
-
 export const getProgress = async (
     userId: string,
     courseId: string,
 ): Promise<number> => {
     try {
+        // Dynamic import to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        
         const publishedChapters = await db.chapter.findMany({
             where: {
                 courseId,

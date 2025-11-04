@@ -1,12 +1,18 @@
-import { db } from '@/lib/db';
-import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
+
+// Route segment config - force dynamic
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function PATCH(
     req: Request,
     { params }: { params: { courseId: string } },
 ) {
     try {
+        // Dynamic imports to prevent build-time issues
+        const { db } = await import('@/lib/db');
+        const { auth } = await import('@clerk/nextjs');
+        
         const { userId } = auth();
 
         if (!userId) {
